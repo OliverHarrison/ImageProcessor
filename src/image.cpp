@@ -187,6 +187,7 @@ void Image::quantize(int k) {
 		}
 		iteration++;
 	}
+	cout << endl;
 
 	// update the pixel colours to their centroid
 	for (int p=0; p<pixels.size(); ++p) {
