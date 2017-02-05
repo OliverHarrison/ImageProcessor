@@ -17,7 +17,14 @@ class Pixel {
 		Pixel(unsigned char r, unsigned char g, unsigned char b) : Pixel(r, g, b, 255) {}
 		Pixel(unsigned char r, unsigned char g, unsigned char b, unsigned char a) : r(r), g(g), b(b), a(a) {}
 
+		Pixel(Pixel && other);                         // move constructor
+		Pixel(const Pixel & other);                    // copy constructor
+
 		// operator overloads
+		Pixel & operator = (const Pixel & other);      // assignment operator
+		Pixel & operator = (Pixel && other);           // move assignment operator
+
+
 
 		// getters
 		unsigned char getR() { return r; }

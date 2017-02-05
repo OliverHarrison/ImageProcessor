@@ -22,7 +22,13 @@ public:
 	Image(int w, int h, vector<unsigned char> image);
 	Image(int w, int h, vector<Pixel> image);
 
+	Image(Image && other);												// move constructor
+	Image(const Image & other);                   // copy constructor
+	~Image();																		 	// destructor
+
 	// operator overloads
+	Image & operator = (const Image & other);			// assignment operator
+	Image & operator = (Image && other);					// move assignment operator
 
 	// getters
 	int getWidth()	const	{ return width; }
