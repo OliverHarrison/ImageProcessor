@@ -36,7 +36,7 @@ class Pixel {
 		void setColour(unsigned char R, unsigned char G, unsigned char B, unsigned char A);
 
 		// utility
-		static int flatten(int x);
+		static int clamp(int x);
 
 
 		// functions

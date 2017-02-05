@@ -34,7 +34,7 @@ void Pixel::setColour(unsigned char R, unsigned char G, unsigned char B, unsigne
 
 /* Utility */
 
-int Pixel::flatten(int x) {
+int Pixel::clamp(int x) {
 	if (x < 0) 		return 0;
 	if (x > 255) 	return 255;
 	return x;
@@ -66,9 +66,9 @@ void Pixel::threshold(int t) {
 
 // set colour via delta values
 void Pixel::modifyColour(int deltaR, int deltaG, int deltaB, int deltaA) {
-	int red 	= flatten((int)r + deltaR);
-	int green	= flatten((int)g + deltaG);
-	int blue	= flatten((int)b + deltaB);
-	int alpha	= flatten((int)a + deltaA);
+	int red 	= clamp((int)r + deltaR);
+	int green	= clamp((int)g + deltaG);
+	int blue	= clamp((int)b + deltaB);
+	int alpha	= clamp((int)a + deltaA);
 	setColour(red, green, blue, alpha);
 }

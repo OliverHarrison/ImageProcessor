@@ -48,14 +48,14 @@ TEST_CASE("Pixel Setters", "[pixel.setters]") {
 
 TEST_CASE("Pixel Utility", "[pixel.utility]") {
 	SECTION("faltten") {
-		REQUIRE(Pixel::flatten(-300) == 0);
-		REQUIRE(Pixel::flatten(-1) == 0);
-		REQUIRE(Pixel::flatten(0) == 0);
-		REQUIRE(Pixel::flatten(1) == 1);
-		REQUIRE(Pixel::flatten(128) == 128);
-		REQUIRE(Pixel::flatten(255) == 255);
-		REQUIRE(Pixel::flatten(256) == 255);
-		REQUIRE(Pixel::flatten(300) == 255);
+		REQUIRE(Pixel::clamp(-300) == 0);
+		REQUIRE(Pixel::clamp(-1) == 0);
+		REQUIRE(Pixel::clamp(0) == 0);
+		REQUIRE(Pixel::clamp(1) == 1);
+		REQUIRE(Pixel::clamp(128) == 128);
+		REQUIRE(Pixel::clamp(255) == 255);
+		REQUIRE(Pixel::clamp(256) == 255);
+		REQUIRE(Pixel::clamp(300) == 255);
 	}
 }
 
