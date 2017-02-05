@@ -1,6 +1,8 @@
 #ifndef PIXEL_H
 #define PIXEL_H
 
+#include <vector>
+
 using namespace std;
 
 class Pixel {
@@ -31,12 +33,14 @@ class Pixel {
 		unsigned char getG() { return g; }
 		unsigned char getB() { return b; }
 		unsigned char getA() { return a; }
+		vector<unsigned char> getColour() { return {r, g, b, a}; }
 
 		// setters
 		void setColour(unsigned char R, unsigned char G, unsigned char B, unsigned char A);
 
 		// utility
 		static int clamp(int x);
+		void clamp();
 
 
 		// functions

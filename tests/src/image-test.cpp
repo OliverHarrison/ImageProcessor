@@ -91,11 +91,6 @@ TEST_CASE ("Image Operators", "[image.operators]") {
 		}
 	}
 
-	vector<Pixel> pixels;
-	for (int i=0; i<9; ++i) {
-		pixels.push_back(Pixel(i*20, i*20, i*20, i*20));
-	}
-
 	SECTION("copy assignment") {
 		Image image("test-images/t1.png");
 		Image image2(3, 3, data);
@@ -115,4 +110,72 @@ TEST_CASE ("Image Operators", "[image.operators]") {
 			checkPixelColour(image.getPixel(i), i*20);
 		}
 	}
+}
+
+TEST_CASE ("Image Utility", "[image.utility]") {
+	SECTION("isValidKernel") {
+		for (int i=0; i<=25; ++i) {
+			vector<float> kernel(i);
+			if (i == 9 || i == 25) {
+				REQUIRE(Image::isValidKernel(kernel) == true);
+			}
+			else {
+				REQUIRE(Image::isValidKernel(kernel) == false);
+			}
+		}
+
+	}
+
+}
+
+TEST_CASE("Image Global Functions", "[image.global]") {
+
+	SECTION("convolve") {
+
+		Image image("test-images/t1.png");
+		image.convolve({0, 0, 0, 0, 1, 0, 0, 0, 0});
+		checkSize(image, 3, 3, 9);
+		for (int i=0; i<9; ++i) {
+			checkPixelColour(image.getPixel(i), 255);
+		}
+
+		Image image2("test-images/t1.png");
+		image2.convolve({0, 0, 0, 0, 0, 0, 0, 0, 0});
+		checkSize(image2, 3, 3, 9);
+		for (Pixel & p :image2.getPixels()) {
+			REQUIRE((int)p.getR() == 0);
+			REQUIRE((int)p.getG() == 0);
+			REQUIRE((int)p.getB() == 0);
+			REQUIRE((int)p.getA() == 255);
+		}
+
+		Image image3("test-images/t1.png");
+		image3.convolve({0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1});
+		checkSize(image3, 3, 3, 9);
+		for (Pixel & p :image3.getPixels()) {
+			REQUIRE((int)p.getR() == (int)(0.1*255*9));
+			REQUIRE((int)p.getG() == (int)(0.1*255*9));
+			REQUIRE((int)p.getB() == (int)(0.1*255*9));
+			REQUIRE((int)p.getA() == 255);
+		}
+
+		Image image4("test-images/t1.png");
+		image4.convolve({0, 0, 0, 0, 2, 0, 0, 0, 0});
+		checkSize(image4, 3, 3, 9);
+		for (int i=0; i<9; ++i) {
+			checkPixelColour(image4.getPixel(i), 255);
+		}
+
+		Image image5("test-images/t1.png");
+		image5.convolve({0, 0, 0, 0, -2, 0, 0, 0, 0});
+		checkSize(image5, 3, 3, 9);
+		for (Pixel & p :image5.getPixels()) {
+			REQUIRE((int)p.getR() == 0);
+			REQUIRE((int)p.getG() == 0);
+			REQUIRE((int)p.getB() == 0);
+			REQUIRE((int)p.getA() == 255);
+		}
+
+	}
+
 }

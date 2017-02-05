@@ -111,3 +111,68 @@ void Image::modifyColour(int deltaR, int deltaG, int deltaB, int deltaA) {
 		p.modifyColour(deltaR, deltaG, deltaB, deltaA);
 	}
 }
+
+
+/* Utility functions */
+bool Image::isValidKernel(const vector<float> & k) {
+	if (k.size() > 8 && floor(sqrt(k.size())) == sqrt(k.size()) && (int)sqrt(k.size())%2 == 1 ) {
+		return true;
+	}
+	return false;
+}
+
+/* Image Functions - Global */
+
+void Image::convolve(const vector<float> & kernel) {
+
+	if (!isValidKernel(kernel) && pixels.size() > 8) return;
+
+	vector<Pixel> newImage;
+
+	int border = floor(sqrt(kernel.size())/2);
+
+	// for each pixel
+	for (int y=border; y<height-border; ++y) {
+		for (int x=border; x<width-border; ++x) {
+
+			int p = y*width + x;
+			vector<float> colour(3);	// rgb
+
+			// for each pixel is neighbourhood (kernerl)
+			int iteration = 0;
+			for (int i=-border; i<=border; ++i) {
+				for (int j=-border; j<=border; ++j) {
+					int n = p + j + i*width;
+					colour[0] += ((int)pixels[n].getR()) * kernel[iteration];
+					colour[1] += ((int)pixels[n].getG()) * kernel[iteration];
+					colour[2] += ((int)pixels[n].getB()) * kernel[iteration];
+					iteration++;
+				}
+			}
+
+			char r = Pixel::clamp((int)colour[0]);
+			char g = Pixel::clamp((int)colour[1]);
+			char b = Pixel::clamp((int)colour[2]);
+			char a = (int)pixels[p].getA();
+
+			newImage.push_back(Pixel(r, g, b, a));
+
+		}
+	}
+
+	pixels = newImage;
+	width -= border*2;
+	height -= border*2;
+}
+
+
+void Image::blur() {
+	convolve({0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625});
+}
+void Image::sharpen() {
+	convolve({0, -1, 0, -1, 5, -1, 0, -1, 0});
+}
+void Image::detectEdges() {
+	toGreyscale();
+	convolve({0, 1, 0, 1, -4, 1, 0, 1, 0});
+}

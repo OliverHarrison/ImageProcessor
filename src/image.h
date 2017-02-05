@@ -2,6 +2,7 @@
 #define IMAGE_H
 
 #include <iostream>
+#include <cmath>
 #include <string>
 #include <vector>
 
@@ -36,6 +37,10 @@ public:
 	vector<Pixel> & getPixels() { return pixels; }
 	Pixel & getPixel (int index) { return pixels[index]; }
 
+	/* Utility Functions */
+
+	static bool isValidKernel(const vector<float> & k);
+
 	/* Image Functions */
 
 	void save(string filename);
@@ -46,9 +51,12 @@ public:
 	void threshold(int t);
 	void modifyColour(int deltaR, int deltaG, int deltaB, int deltaA);
 
-	// global functions
-	// kmeans
-	// convolution - blur, sharpen, detect edges
+	// Global functions
+	void quantize(int k);		// colour quantization by K-Means
+	void convolve(const vector<float> & kernel); 		// apply a kernel
+	void blur();
+	void sharpen();
+	void detectEdges();
 
 };
 
