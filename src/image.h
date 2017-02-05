@@ -35,8 +35,21 @@ public:
 	int getHeight()	const	{ return height; }
 	vector<Pixel> & getPixels() { return pixels; }
 	Pixel & getPixel (int index) { return pixels[index]; }
-	// Pixel & getPixel (int x, int y) { }
-	// functions
+
+	/* Image Functions */
+
+	void save(string filename);
+
+	// local (per-pixel) functions
+	void invert();
+	void toGreyscale();
+	void threshold(int t);
+	void modifyColour(int deltaR, int deltaG, int deltaB, int deltaA);
+
+	// global functions
+	// kmeans
+	// convolution - blur, sharpen, detect edges
+
 };
 
 #endif

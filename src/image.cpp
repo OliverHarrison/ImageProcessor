@@ -47,6 +47,13 @@ Image::Image(const Image & other) {
 	pixels = other.pixels;
 }
 
+// destructor
+Image::~Image() {
+	width = 0;
+	height = 0;
+	pixels.clear();
+}
+
 /* Operator Overloads */
 
 // assignment operator
@@ -64,9 +71,43 @@ Image & Image::operator = (Image && other) {
 	return *this;
 }
 
-// destructor
-Image::~Image() {
-	width = 0;
-	height = 0;
-	pixels.clear();
+void Image::save(string filename) {
+	vector<unsigned char> image;
+
+	for (Pixel & p: pixels) {
+		image.push_back(p.getR());
+		image.push_back(p.getG());
+		image.push_back(p.getB());
+		image.push_back(p.getA());
+	}
+
+	//Encode the image
+	unsigned error = lodepng::encode(filename, image, width, height);
+
+	//if there's an error, display it
+	if(error) cout << "An error occured when saving the file. " << error << ": "<< lodepng_error_text(error) << endl;
+
+}
+
+/* Image Functions - Local */
+
+void Image::invert() {
+	for (Pixel & p: pixels) {
+		p.invert();
+	}
+}
+void Image::toGreyscale() {
+	for (Pixel & p: pixels) {
+		p.toGreyscale();
+	}
+}
+void Image::threshold(int t) {
+	for (Pixel & p: pixels) {
+		p.threshold(t);
+	}
+}
+void Image::modifyColour(int deltaR, int deltaG, int deltaB, int deltaA) {
+	for (Pixel & p: pixels) {
+		p.modifyColour(deltaR, deltaG, deltaB, deltaA);
+	}
 }
