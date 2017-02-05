@@ -33,10 +33,17 @@ class Pixel {
 		unsigned char getA() { return a; }
 
 		// setters
+		void setColour(unsigned char R, unsigned char G, unsigned char B, unsigned char A);
 
+		// utility
+		static int flatten(int x);
 
 
 		// functions
+		void invert();
+		void toGreyscale();
+		void threshold(int t);
+		void modifyColour(int deltaR, int deltaG, int deltaB, int deltaA);
 
 
 };
