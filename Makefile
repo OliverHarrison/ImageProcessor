@@ -6,19 +6,25 @@ CCFLAGS = -std=c++11
 BIN = bin
 BUILD = build
 SRC = src
-INC = inc
+INC = include
 
-CPP_FILES := $(wildcard $(SRC)/*.cpp)
+CPP_FILES := $(wildcard $(SRC)/*.cpp) lodepng.o
 OBJ_FILES := $(addprefix $(BUILD)/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 $(BIN)/ImageProcessor: $(OBJ_FILES)
 	$(CC) $(CCFLAGS) -o $@ $^
 
 $(BUILD)/%.o: $(SRC)/%.cpp
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -I $(INC) -c $< -o $@
+
+$(BUILD)/lodepng.o:
+	$(CC) $(CCFLAGS) -c $(INC)/lodepng.cpp -o $(BUILD)/lodepng.o
 
 run:
 	cd bin; ./ImageProcessor
+
+test:
+	cd tests; make; make run
 
 clean:
 	rm -f *.o $(BUILD)/*.o
