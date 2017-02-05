@@ -123,6 +123,80 @@ bool Image::isValidKernel(const vector<float> & k) {
 
 /* Image Functions - Global */
 
+// k-means colour quantization
+
+struct Centroid {int r; int g; int b; int count;};
+
+void Image::quantize(int k) {
+
+	// Step 1: create and initialize k centroids randomly
+	vector<Centroid> centroids;
+
+	// create random number generator with range [0, 255]
+	random_device rd;
+	mt19937 rng(rd());
+	uniform_int_distribution<int> random(0, 255);
+
+	for (int i=0;i<k; ++i) {
+		centroids.push_back({random(rng), random(rng), random(rng), 1});
+	}
+
+	// Step 2: 1) assign pixels to centroids 2) recalculate centroids until convergence
+	bool converged = false;
+	int iteration = 0;
+	vector<int> pCentroids(pixels.size());	// this stores the index of the centroid that each pixels belongs to.
+
+	while(!converged) {
+		cout << "\rK-Means Iteration: " << iteration << flush;
+
+		// 2.1) assign pixels to nearest centroid
+		for (int p=0; p<pixels.size(); ++p) {
+			float min = 2000000;
+			for (int i=0;i<k; ++i) {
+				float distance = pixels[p].getColourDistance(centroids[i].r, centroids[i].g, centroids[i].b);
+				if (distance < min) {
+					pCentroids[p] = i;
+					min = distance;
+				}
+			}
+		}
+
+		// 2.2) recalculate centroids
+		vector<Centroid> cCopy = centroids;
+		// reset centroids
+		for (int i=0; i<k; ++i) {
+			centroids[i] = {0, 0, 0, 1};
+		}
+		// sum pixels nearest to centroid
+		for (int p=0; p<pixels.size(); ++p) {
+			centroids[pCentroids[p]].r += (int)pixels[p].getR();
+			centroids[pCentroids[p]].g += (int)pixels[p].getG();
+			centroids[pCentroids[p]].b += (int)pixels[p].getB();
+			centroids[pCentroids[p]].count++;
+		}
+	 	converged = true;	// assume true and falsify on first value difference
+		// find average value
+		for (int i=0; i<k; ++i) {
+			centroids[i].r /= centroids[i].count;
+			centroids[i].g /= centroids[i].count;
+			centroids[i].b /= centroids[i].count;
+			// converged if means do not change between iterations
+			if (centroids[i].r != cCopy[i].r || centroids[i].g != cCopy[i].g || centroids[i].b != cCopy[i].b) {
+				converged = false;
+			}
+		}
+		iteration++;
+	}
+
+	// update the pixel colours to their centroid
+	for (int p=0; p<pixels.size(); ++p) {
+		pixels[p].setColour(centroids[pCentroids[p]].r, centroids[pCentroids[p]].g, centroids[pCentroids[p]].b, pixels[p].getA());
+	}
+
+}
+
+
+// convolution
 void Image::convolve(const vector<float> & kernel) {
 
 	if (!isValidKernel(kernel) && pixels.size() > 8) return;

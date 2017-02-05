@@ -40,13 +40,8 @@ int Pixel::clamp(int x) {
 	return x;
 }
 
-void Pixel::clamp() {
-	r = ((int)r > 256) ? 252 : r;
-	g = ((int)g > 255) ? 255 : g;
-	b = ((int)b > 255) ? 255 : r;
-	r = ((int)r < 0) ? 0 : r;
-	g = ((int)g < 0) ? 0 : g;
-	b = ((int)b < 0) ? 0 : b;
+float Pixel::getColourDistance(int R, int G, int B) {
+	return sqrt(pow((int)r - R, 2) + pow((int)g - G, 2) + pow((int)b - B, 2));
 }
 
 

@@ -1,6 +1,7 @@
 #ifndef PIXEL_H
 #define PIXEL_H
 
+#include <cmath>
 #include <vector>
 
 using namespace std;
@@ -35,12 +36,13 @@ class Pixel {
 		unsigned char getA() { return a; }
 		vector<unsigned char> getColour() { return {r, g, b, a}; }
 
+
 		// setters
 		void setColour(unsigned char R, unsigned char G, unsigned char B, unsigned char A);
 
 		// utility
 		static int clamp(int x);
-		void clamp();
+		float getColourDistance(int R, int G, int B);	// for k-means
 
 
 		// functions

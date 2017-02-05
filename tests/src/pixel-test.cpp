@@ -57,6 +57,13 @@ TEST_CASE("Pixel Utility", "[pixel.utility]") {
 		REQUIRE(Pixel::clamp(256) == 255);
 		REQUIRE(Pixel::clamp(300) == 255);
 	}
+
+	SECTION("getColourDistance") {
+		Pixel p;
+		REQUIRE((int)p.getColourDistance(3,3,3) == 5);
+		REQUIRE((int)p.getColourDistance(7,7,7) == 12);
+		REQUIRE((int)p.getColourDistance(1,2,3) == 3);
+	}
 }
 
 TEST_CASE ("Pixel Operators", "[pixel.operators]") {
