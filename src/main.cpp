@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
 		}
 		else if (string(argv[arg]) == "-t") {		// threshold
 			arg++;
+			if (arg == argc) { cout << "Please provide a value for t."; return 0; }
 			int t = atoi(argv[arg]);
 			if (t > 0) {
 				cout << "Applying a thresold of " << t << "...\n";
@@ -44,6 +45,7 @@ int main(int argc, char* argv[]) {
 		}
 		else if (string(argv[arg]) == "-k") {		// quantize
 			arg++;
+			if (arg == argc) { cout << "Please provide a value for k."; return 0; }
 			int k = atoi(argv[arg]);
 			if (k > 0) {
 				cout << "Running K-Means with k = " << k << "...\n";
