@@ -72,7 +72,8 @@ int main(int argc, char* argv[]) {
 		}
 		else if (string(argv[arg]) == "-m") {		// manual
 			arg++;
-			cout << "Manual:\n";
+			cout << "Execution: ./ImageProcessor <img.png> <flags>\n";
+			cout << "Flags:\n";
 			cout << "\t-i  \tinvert\n";
 			cout << "\t-g  \tgreyscale\n";
 			cout << "\t-t t\tthreshold\n";
