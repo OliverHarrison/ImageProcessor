@@ -1,7 +1,4 @@
-
-
 #include <iostream>
-
 #include "Image.h"
 
 using namespace std;
@@ -13,7 +10,7 @@ int main(int argc, char* argv[]) {
 	cout << "**********************************" << endl;
 
 	if (argc < 2) {
-		cout << "please specify an image followed by options.\n";
+		cout << "Please specify an image.\n";
 		return 0;
 	}
 
@@ -45,7 +42,6 @@ int main(int argc, char* argv[]) {
 				return 0;
 			}
 		}
-
 		else if (string(argv[arg]) == "-k") {		// quantize
 			arg++;
 			int k = atoi(argv[arg]);
@@ -59,7 +55,6 @@ int main(int argc, char* argv[]) {
 				return 0;
 			}
 		}
-
 		else if (string(argv[arg]) == "-s") {		// sharpen
 			arg++;
 			cout << "Sharpening...\n";
