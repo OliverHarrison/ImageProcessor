@@ -36,8 +36,8 @@ Flag | Args | Description | Example Output
 
 ## Tests
 
-This project uses [Catch](https://github.com/philsquared/Catch) for unit testing.
-Testing can be conducted by running `make test` in the project root folder.
+This project uses [Catch](https://github.com/philsquared/Catch) for unit testing and can be conducted by running `make test` in the project root folder. <br/>
+Please note that if you're on Windows you'll need to uncomment `#include <Windows.h>` in `tests/src/config.cpp`.
 
 ## License
 

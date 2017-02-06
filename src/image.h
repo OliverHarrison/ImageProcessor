@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "Pixel.h"
+#include "pixel.h"
 #include "lodepng.h"
 
 using namespace std;
