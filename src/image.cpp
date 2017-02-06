@@ -200,7 +200,7 @@ void Image::quantize(int k) {
 // convolution
 void Image::convolve(const vector<float> & kernel) {
 
-	if (!isValidKernel(kernel) && pixels.size() > 8) return;
+	if (!isValidKernel(kernel) || pixels.size() < kernel.size()) return;
 
 	vector<Pixel> newImage;
 
