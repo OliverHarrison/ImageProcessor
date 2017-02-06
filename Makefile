@@ -21,7 +21,7 @@ $(BUILD)/lodepng.o:
 	$(CC) $(CCFLAGS) -c $(INC)/lodepng.cpp -o $(BUILD)/lodepng.o
 
 run:
-	cd bin; ./ImageProcessor
+	cd bin; ./ImageProcessor sample-images/lenna.png
 
 test:
 	cd tests; make; make run
