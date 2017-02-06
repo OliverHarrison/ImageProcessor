@@ -27,4 +27,4 @@ run:
 	cd bin; ./ImageProcessorTest
 
 clean:
-	rm -f *.o $(BUILD)/*.o
+	rm -f $(BUILD)/*.o $(BIN)/*.exe
