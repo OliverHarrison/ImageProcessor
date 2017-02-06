@@ -75,6 +75,17 @@ int main(int argc, char* argv[]) {
 			cout << "Detecting Edges...\n";
 			image.detectEdges();
 		}
+		else if (string(argv[arg]) == "-m") {		// manual
+			arg++;
+			cout << "Manual:\n";
+			cout << "\t-i  \tinvert\n";
+			cout << "\t-g  \tgreyscale\n";
+			cout << "\t-t t\tthreshold\n";
+			cout << "\t-k k\tk-means quantization\n";
+			cout << "\t-b  \tblur\n";
+			cout << "\t-s  \tsharpen\n";
+			cout << "\t-e  \tdetect edges\n";
+		}
 		else {
 			cout << "Unrecognized command: " << argv[arg] <<  "... Exiting." << endl;
 			return 0;
@@ -85,3 +96,4 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
+
