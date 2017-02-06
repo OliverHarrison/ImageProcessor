@@ -1,8 +1,8 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <random>
 #include <string>
 #include <vector>
@@ -13,52 +13,48 @@
 using namespace std;
 
 class Image {
+	private:
+		unsigned int width, height;
+		vector<Pixel> pixels;
+	public:
+		/* Constructors */
+		Image();
+		Image(string filename);
+		Image(int w, int h, vector<unsigned char> image);
+		Image(int w, int h, vector<Pixel> image);
 
-private:
-	unsigned int width, height;
-	vector<Pixel> pixels;
-public:
-	// constructors
-	Image();
-	Image(string filename);
-	Image(int w, int h, vector<unsigned char> image);
-	Image(int w, int h, vector<Pixel> image);
+		Image(Image && other);                      // move constructor
+		Image(const Image & other);                 // copy constructor
+		~Image();                                   // destructor
 
-	Image(Image && other);												// move constructor
-	Image(const Image & other);                   // copy constructor
-	~Image();																		 	// destructor
+		/* Operator Overloads */
+		Image & operator = (const Image & other);   // assignment operator
+		Image & operator = (Image && other);        // move assignment operator
 
-	// operator overloads
-	Image & operator = (const Image & other);			// assignment operator
-	Image & operator = (Image && other);					// move assignment operator
+		/* Getters */
+		int getWidth()	const	{ return width; }
+		int getHeight()	const	{ return height; }
+		vector<Pixel> & getPixels() { return pixels; }
+		Pixel & getPixel (int index) { return pixels[index]; }
 
-	// getters
-	int getWidth()	const	{ return width; }
-	int getHeight()	const	{ return height; }
-	vector<Pixel> & getPixels() { return pixels; }
-	Pixel & getPixel (int index) { return pixels[index]; }
+		/* Utility  */
+		static bool isValidKernel(const vector<float> & k);
 
-	/* Utility Functions */
+		/* Image Functions */
+		void save(string filename);
 
-	static bool isValidKernel(const vector<float> & k);
+		// local (per-pixel) functions
+		void invert();
+		void toGreyscale();
+		void threshold(int t);
+		void modifyColour(int deltaR, int deltaG, int deltaB, int deltaA);
 
-	/* Image Functions */
-
-	void save(string filename);
-
-	// local (per-pixel) functions
-	void invert();
-	void toGreyscale();
-	void threshold(int t);
-	void modifyColour(int deltaR, int deltaG, int deltaB, int deltaA);
-
-	// Global functions
-	void quantize(int k);		// colour quantization by K-Means
-	void convolve(const vector<float> & kernel); 		// apply a kernel
-	void blur();
-	void sharpen();
-	void detectEdges();
-
+		// global functions
+		void quantize(int k);                           // colour quantization by K-Means
+		void convolve(const vector<float> & kernel);    // apply a kernel
+		void blur();
+		void sharpen();
+		void detectEdges();
 };
 
 #endif

@@ -3,9 +3,7 @@
 /* Constructors */
 
 // default constructor
-Image::Image() : width(0), height(0), pixels(0) {
-
-}
+Image::Image() : width(0), height(0), pixels(0) { }
 
 // file constructor
 Image::Image(string filename) {
@@ -30,9 +28,7 @@ Image::Image(int w, int h, vector<unsigned char> image) : width(w), height(h) {
 }
 
 // pixel data contructor
-Image::Image(int w, int h, vector<Pixel> image) : width(w), height(h), pixels(image) {
-
-}
+Image::Image(int w, int h, vector<Pixel> image) : width(w), height(h), pixels(image) { }
 
 // move constructor
 Image::Image(Image && other){
@@ -46,7 +42,6 @@ Image::Image(const Image & other) {
 	height = other.height;
 	pixels = other.pixels;
 }
-
 // destructor
 Image::~Image() {
 	width = 0;
@@ -71,6 +66,7 @@ Image & Image::operator = (Image && other) {
 	return *this;
 }
 
+// save the image to file
 void Image::save(string filename) {
 	vector<unsigned char> image;
 
@@ -83,10 +79,7 @@ void Image::save(string filename) {
 
 	//Encode the image
 	unsigned error = lodepng::encode(filename, image, width, height);
-
-	//if there's an error, display it
 	if(error) cout << "An error occured when saving the file. " << error << ": "<< lodepng_error_text(error) << endl;
-
 }
 
 /* Image Functions - Local */
@@ -112,9 +105,9 @@ void Image::modifyColour(int deltaR, int deltaG, int deltaB, int deltaA) {
 	}
 }
 
-
 /* Utility functions */
 bool Image::isValidKernel(const vector<float> & k) {
+	// true if at least 3x3 and sqrt(size) is an odd integer
 	if (k.size() > 8 && floor(sqrt(k.size())) == sqrt(k.size()) && (int)sqrt(k.size())%2 == 1 ) {
 		return true;
 	}
@@ -124,7 +117,6 @@ bool Image::isValidKernel(const vector<float> & k) {
 /* Image Functions - Global */
 
 // k-means colour quantization
-
 struct Centroid {int r; int g; int b; int count;};
 
 void Image::quantize(int k) {
@@ -193,9 +185,7 @@ void Image::quantize(int k) {
 	for (int p=0; p<pixels.size(); ++p) {
 		pixels[p].setColour(centroids[pCentroids[p]].r, centroids[pCentroids[p]].g, centroids[pCentroids[p]].b, pixels[p].getA());
 	}
-
 }
-
 
 // convolution
 void Image::convolve(const vector<float> & kernel) {
@@ -203,44 +193,42 @@ void Image::convolve(const vector<float> & kernel) {
 	if (!isValidKernel(kernel) || pixels.size() < kernel.size()) return;
 
 	vector<Pixel> newImage;
+	int border = floor(sqrt(kernel.size())/2); // don't process pixels on edges
 
-	int border = floor(sqrt(kernel.size())/2);
-
-	// for each pixel
+	// for each pixel inside border
 	for (int y=border; y<height-border; ++y) {
 		for (int x=border; x<width-border; ++x) {
 
-			int p = y*width + x;
-			vector<float> colour(3);	// rgb
+			int p = y*width + x;			// current pixel index
+			vector<float> colour(3);	// new rgb value
 
-			// for each pixel is neighbourhood (kernerl)
+			// for each pixel in neighbourhood, add it's weighted value to the new colour
 			int iteration = 0;
 			for (int i=-border; i<=border; ++i) {
 				for (int j=-border; j<=border; ++j) {
-					int n = p + j + i*width;
+					int n = p + j + i*width;	// current pixel in neighbourhood
 					colour[0] += ((int)pixels[n].getR()) * kernel[iteration];
 					colour[1] += ((int)pixels[n].getG()) * kernel[iteration];
 					colour[2] += ((int)pixels[n].getB()) * kernel[iteration];
 					iteration++;
 				}
 			}
-
+			// clamp to [0, 255]
 			char r = Pixel::clamp((int)colour[0]);
 			char g = Pixel::clamp((int)colour[1]);
 			char b = Pixel::clamp((int)colour[2]);
 			char a = (int)pixels[p].getA();
 
 			newImage.push_back(Pixel(r, g, b, a));
-
 		}
 	}
-
+	// update object
 	pixels = newImage;
 	width -= border*2;
 	height -= border*2;
 }
 
-
+// convolution functions
 void Image::blur() {
 	convolve({0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625});
 }

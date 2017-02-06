@@ -1,4 +1,3 @@
-
 #include "pixel.h"
 
 /* Constructors */
@@ -26,24 +25,23 @@ Pixel & Pixel::operator = (Pixel && other) {
 }
 
 /* Setters */
-
 void Pixel::setColour(unsigned char R, unsigned char G, unsigned char B, unsigned char A) {
 	r = R; g = G; b = B; a = A;
 }
 
-
 /* Utility */
 
+// clamps a given to integer to [0, 255]
 int Pixel::clamp(int x) {
 	if (x < 0) 		return 0;
 	if (x > 255) 	return 255;
 	return x;
 }
 
+// returns the euclidean distance to another RGB colour
 float Pixel::getColourDistance(int R, int G, int B) {
 	return sqrt(pow((int)r - R, 2) + pow((int)g - G, 2) + pow((int)b - B, 2));
 }
-
 
 /* Pixel Functions */
 
