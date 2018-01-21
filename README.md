@@ -26,12 +26,12 @@ Flags may be stacked, for example  `./ImageProcessor image.png -i -k 3 -s` will 
 Flag | Arguments | Description | Example Output
 ---- | ---- | ----------- | --------------
 -i | | **Invert** image by finding 255-RGB for each pixel. | ![Alt text](examples/invert.png?raw=true "Invert")
--g | | **Greyscale** conversion by averaging RGB values. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/greyscale.png "Greyscale")
--t | t[0, 255] | **Threshold** pixels by setting RGB values <= t = 0 and values > t = 255. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/threshold.png "Threshold")
--k | k[1, 255] | **Quantize** colours by running K-Means with k centroids. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/quantize.png "Quantize")
--b | | **Blur** image by convolving with a Gaussian kernel. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/blur.png "Blur")
--s | | **Sharpen** image by convolving with a kernel that emphasizes differences in adjacent pixel values. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/sharpen.png "Sharpen")
--e | | **Detect edges** by converting to greyscale and convolving with an edge detection kernel. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/edges.png "Invert")
+-g | | **Greyscale** conversion by averaging RGB values. | ![Alt text](examples/greyscale.png?raw=true "Greyscale")
+-t | t[0, 255] | **Threshold** pixels by setting RGB values <= t = 0 and values > t = 255. | ![Alt text](examples/threshold.png?raw=true "Threshold")
+-k | k[1, 255] | **Quantize** colours by running K-Means with k centroids. | ![Alt text](examples/quantize.png?raw=true "Quantize")
+-b | | **Blur** image by convolving with a Gaussian kernel. | ![Alt text](examples/blur.png?raw=true "Blur")
+-s | | **Sharpen** image by convolving with a kernel that emphasizes differences in adjacent pixel values. | ![Alt text](examples/sharpen.png?raw=true "Sharen")
+-e | | **Detect edges** by converting to greyscale and convolving with an edge detection kernel. | ![Alt text](examples/edges.png?raw=true "Edges")
 
 
 ## Tests
