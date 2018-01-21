@@ -25,7 +25,7 @@ Flags may be stacked, for example  `./ImageProcessor image.png -i -k 3 -s` will 
 
 Flag | Arguments | Description | Example Output
 ---- | ---- | ----------- | --------------
--i | | **Invert** image by finding 255-RGB for each pixel. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/invert.png "Invert")
+-i | | **Invert** image by finding 255-RGB for each pixel. | ![Alt text](examples/invert.png?raw=true "Invert")
 -g | | **Greyscale** conversion by averaging RGB values. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/greyscale.png "Greyscale")
 -t | t[0, 255] | **Threshold** pixels by setting RGB values <= t = 0 and values > t = 255. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/threshold.png "Threshold")
 -k | k[1, 255] | **Quantize** colours by running K-Means with k centroids. | ![picture alt](http://www.olivermharrison.com/img/ImageProcessor/quantize.png "Quantize")
