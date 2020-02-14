@@ -2,13 +2,6 @@
 
 A C++ demo project that explores image processing algorithms on PNG images.
 
-## Motivation
-
-I made this project to:
-* demonstrate my abilities in C++.
-* explore the K-Means algorithm and convolution functions.
-* have some fun with images.
-
 ## Installation
 
 This project is compiled using g++ and make. To install, clone this repository and run `make` in the project root folder.
