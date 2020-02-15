@@ -1,6 +1,6 @@
 # ImageProcessor
 
-A C++ demo project that explores image processing algorithms on PNG images.
+A C++ project that explores image processing algorithms on PNG images.
 
 ## Installation
 
